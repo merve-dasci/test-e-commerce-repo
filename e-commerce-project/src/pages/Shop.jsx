@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, Grid, List, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Shop = () => {
@@ -120,7 +121,7 @@ const Shop = () => {
   ];
 
   const ProductCard = ({ product }) => (
-    <div className="bg-white group cursor-pointer">
+    <Link to={`/product/${product.id}`} className="bg-white group cursor-pointer block">
       <div className="relative overflow-hidden">
         <img 
           src={product.image}
@@ -145,7 +146,7 @@ const Shop = () => {
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 
   return (

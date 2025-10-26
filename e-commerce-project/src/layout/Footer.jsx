@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter } from 'lucide-react';
 const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-200">
-      {/* Top section with Bandage and social media */}
+     
       <div className="bg-gray-100">
         <div className="max-w-1440 mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -18,9 +18,9 @@ const Footer = () => {
       </div>
 
       <div className="max-w-1440 mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Footer Content */}
+      
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
-          {/* Company Links */}
+         
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4">Company Info</h4>
             <ul className="space-y-2">
@@ -31,7 +31,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal */}
+       
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4">Legal</h4>
             <ul className="space-y-2">
@@ -42,7 +42,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Features */}
+        
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4">Features</h4>
             <ul className="space-y-2">
@@ -53,7 +53,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Resources */}
+        
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4">Resources</h4>
             <ul className="space-y-2">
@@ -64,7 +64,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Get In Touch */}
+       
           <div>
             <h4 className="text-lg font-semibold text-gray-900 mb-4">Get In Touch</h4>
             <div className="flex mb-3">
@@ -81,7 +81,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter */}
+       
         <div className="mt-12 pt-8 border-t border-gray-200 bg-gray-100 px-8 py-6 rounded-lg">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 text-sm mb-4 md:mb-0 font-bold">
