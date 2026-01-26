@@ -105,7 +105,7 @@ const Team = () => {
   ];
 
   const TeamMemberCard = ({ member }) => (
-    <div className="bg-white text-center">
+    <div className="bg-white dark:bg-gray-800 text-center">
       <div className="mb-4">
         <img 
           src={member.image}
@@ -113,8 +113,8 @@ const Team = () => {
           className="w-full h-64 object-cover rounded-lg"
         />
       </div>
-      <h3 className="font-bold text-lg mb-2 text-gray-900">{member.name}</h3>
-      <p className="text-gray-600 text-sm mb-4">{member.role}</p>
+      <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">{member.name}</h3>
+      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{member.role}</p>
       <div className="flex justify-center gap-3">
         <a href={member.socialLinks.facebook} className="text-blue-500 hover:text-blue-700">
           <i className="fab fa-facebook text-xl"></i>
@@ -130,31 +130,31 @@ const Team = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
      
-      <nav className="py-4 px-4 bg-gray-50">
+      <nav className="py-4 px-4 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-1440 mx-auto">
-          <Link to="/" className="text-gray-600 hover:text-gray-800">Home</Link>
-          <span className="mx-2 text-gray-400">/</span>
-          <span className="text-gray-900">Team</span>
+          <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">Home</Link>
+          <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
+          <span className="text-gray-900 dark:text-white">Team</span>
         </div>
       </nav>
 
     
-      <section className="py-12 lg:py-20 bg-white">
+      <section className="py-12 lg:py-20 bg-white dark:bg-gray-900">
         <div className="max-w-1440 mx-auto px-4 text-center">
           <p className="text-sm font-medium mb-4 tracking-wider text-blue-500">
             WHAT WE DO
           </p>
-          <h1 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">
+          <h1 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
             Innovation tailored for you
           </h1>
           
          
           <div className="flex justify-center items-center gap-2 mb-12">
-            <Link to="/" className="text-gray-900 font-bold">Home</Link>
-            <span className="text-gray-400">/</span>
-            <span className="text-gray-500">Team</span>
+            <Link to="/" className="text-gray-900 dark:text-white font-bold">Home</Link>
+            <span className="text-gray-400 dark:text-gray-500">/</span>
+            <span className="text-gray-500 dark:text-gray-400">Team</span>
           </div>
 
           
@@ -213,9 +213,9 @@ const Team = () => {
       </section>
 
      
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-gray-900">
         <div className="max-w-1440 mx-auto px-4">
-          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-16 text-gray-900">
+          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-16 text-gray-900 dark:text-white">
             Meet Our Team
           </h2>
 
@@ -229,12 +229,12 @@ const Team = () => {
       </section>
 
      
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-gray-900">
         <div className="max-w-1440 mx-auto px-4 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-gray-900">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
             Start your 14 days free trial
           </h2>
-          <p className="text-lg mb-8 text-gray-600 max-w-md mx-auto">
+          <p className="text-lg mb-8 text-gray-600 dark:text-gray-400 max-w-md mx-auto">
             Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent.
           </p>
           <button className="bg-blue-500 text-white px-8 py-3 rounded font-medium hover:bg-blue-600 transition-colors mb-8">

@@ -15,7 +15,8 @@ api.interceptors.request.use(
     
     const token = localStorage.getItem('token');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      // Token'ı Bearer olmadan gönder (API bu şekilde bekliyor)
+      config.headers.Authorization = token;
     }
     return config;
   },
@@ -30,12 +31,8 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-   
-    if (error.response?.status === 401) {
-   
-      localStorage.removeItem('token');
-      window.location.href = '/login';
-    }
+    // 401 hatası aldığımızda sadece hatayı döndür
+    // Token silme işlemi manuel logout'ta yapılacak
     return Promise.reject(error);
   }
 );

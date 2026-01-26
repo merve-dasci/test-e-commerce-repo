@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, Calendar, MessageCircle } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
+import Categories from '../components/Categories';
 
 const HomePage = () => {
   
@@ -125,80 +126,82 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Top 5 Categories Section */}
+      <Categories />
+
      
-      <section className="py-16 bg-gray-50">
+      {/* Editor's Pick Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="text-center mb-12">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
             EDITOR'S PICK
           </h3>
-          <p className="text-gray-600 max-w-md mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
             Problems trying to resolve the conflict between 
           </p>
         </div>
 
-      
-        <div className="max-w-1440 mx-auto px-4">
-         
-          <div className="space-y-16 md:grid md:grid-cols-4 md:gap-6 md:space-y-0">
-          
-            <div className="md:col-span-2 relative group cursor-pointer">
-              <div className="aspect-[4/5] md:aspect-[2/3] bg-gray-200 overflow-hidden relative rounded-lg">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[500px]">
+            {/* MEN - Sol taraf, 2 row kaplıyor */}
+            <div className="md:col-span-2 md:row-span-2 relative group cursor-pointer h-[400px] md:h-full">
+              <div className="h-full bg-gray-200 overflow-hidden rounded-lg">
                 <img 
                   src="/images/categories/media-man.png" 
                   alt="Men"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="absolute bottom-10 left-6 z-50">
-                <button className="bg-white px-8 py-4 font-bold text-black shadow-xl rounded">
+              <div className="absolute bottom-6 left-6">
+                <button className="bg-white px-12 py-3 font-bold text-gray-900 shadow-lg hover:bg-gray-100 transition-colors">
                   MEN
                 </button>
               </div>
             </div>
 
-          
-            <div className="relative group cursor-pointer">
-              <div className="aspect-[4/5] md:aspect-[1/1.5] bg-gray-200 overflow-hidden relative rounded-lg">
+            {/* WOMEN - Orta üst */}
+            <div className="relative group cursor-pointer h-[250px] md:h-full">
+              <div className="h-full bg-gray-200 overflow-hidden rounded-lg">
                 <img 
                   src="/images/categories/media-women.png" 
                   alt="Women"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="absolute bottom-10 left-6 z-50">
-                <button className="bg-white px-8 py-4 font-bold text-black shadow-xl rounded">
+              <div className="absolute bottom-6 left-6">
+                <button className="bg-white px-10 py-3 font-bold text-gray-900 shadow-lg hover:bg-gray-100 transition-colors">
                   WOMEN
                 </button>
               </div>
             </div>
 
-           
-            <div className="relative group cursor-pointer">
-              <div className="aspect-[4/5] bg-gray-200 overflow-hidden relative rounded-lg">
+            {/* ACCESSORIES - Sağ üst */}
+            <div className="relative group cursor-pointer h-[250px] md:h-full">
+              <div className="h-full bg-gray-200 overflow-hidden rounded-lg">
                 <img 
                   src="/images/categories/media-accessories.png" 
                   alt="Accessories"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="absolute bottom-8 left-4 z-50">
-                <button className="bg-white px-6 py-3 font-bold text-black shadow-xl rounded text-sm">
+              <div className="absolute bottom-6 left-6">
+                <button className="bg-white px-6 py-3 font-bold text-gray-900 shadow-lg hover:bg-gray-100 transition-colors text-sm">
                   ACCESSORIES
                 </button>
               </div>
             </div>
-            
-          
-            <div className="relative group cursor-pointer ">
-              <div className="aspect-[4/5] bg-gray-200 overflow-hidden relative rounded-lg">
+
+            {/* KIDS - Sağ alt, 2 column kaplıyor */}
+            <div className="md:col-span-2 relative group cursor-pointer h-[250px] md:h-full">
+              <div className="h-full bg-gray-200 overflow-hidden rounded-lg">
                 <img 
                   src="/images/categories/media-kids.png" 
                   alt="Kids"
-                  className="w-full h-full group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="absolute bottom-10 left-4 z-50">
-                <button className="bg-white px-6 py-3 font-bold text-black shadow-xl rounded text-sm">
+              <div className="absolute bottom-6 left-6">
+                <button className="bg-white px-12 py-3 font-bold text-gray-900 shadow-lg hover:bg-gray-100 transition-colors">
                   KIDS
                 </button>
               </div>
@@ -208,13 +211,13 @@ const HomePage = () => {
       </section>
 
    
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-gray-900">
         <div className="text-center mb-12">
-          <p className="text-gray-500 mb-2">Featured Products</p>
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <p className="text-gray-500 dark:text-gray-400 mb-2">Featured Products</p>
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
             BESTSELLER PRODUCTS
           </h3>
-          <p className="text-gray-600 max-w-md mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
             Problems trying to resolve the conflict between 
           </p>
         </div>
@@ -302,18 +305,18 @@ const HomePage = () => {
       </section>
 
    
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-gray-900">
         <div className="max-w-1440 mx-auto px-4">
           
           <div className="block md:hidden text-center">
             <p className="text-sm font-medium mb-4 tracking-wider text-blue-500">
               SUMMER 2020
             </p>
-            <h2 className="text-3xl font-bold mb-6 leading-tight text-gray-900">
+            <h2 className="text-3xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
               Part of the<br />
               Neural Universe
             </h2>
-            <p className="text-lg mb-8 max-w-md mx-auto leading-relaxed text-gray-600">
+            <p className="text-lg mb-8 max-w-md mx-auto leading-relaxed text-gray-600 dark:text-gray-400">
               We know how large objects will act, but things on a small scale.
             </p>
             <div className="flex flex-col items-center">
@@ -351,11 +354,11 @@ const HomePage = () => {
               <p className="text-base font-medium mb-4 tracking-wider text-blue-500">
                 SUMMER 2020
               </p>
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
                 Part of the<br />
                 Neural Universe
               </h2>
-              <p className="text-lg mb-8 max-w-md leading-relaxed text-gray-600">
+              <p className="text-lg mb-8 max-w-md leading-relaxed text-gray-600 dark:text-gray-400">
                 We know how large objects will act, but things on a small scale.
               </p>
               <div className="flex flex-col items-start gap-6">
@@ -372,22 +375,22 @@ const HomePage = () => {
       </section>
 
     
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-1440 mx-auto px-4 text-center">
           <p className="text-sm md:text-base font-medium mb-4 tracking-wider text-blue-500">
             Practice Advice
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
             Featured Products
           </h2>
-          <p className="text-lg mb-12 max-w-md mx-auto leading-relaxed text-gray-600">
+          <p className="text-lg mb-12 max-w-md mx-auto leading-relaxed text-gray-600 dark:text-gray-400">
             Problems trying to resolve the conflict between the two major.
           </p>
           
         
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-1440 mx-auto">
         
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
              
               <div className="relative">
                 <img 
@@ -405,22 +408,22 @@ const HomePage = () => {
               
                 <div className="flex space-x-4 mb-4 text-sm">
                   <a href="#" className="text-blue-500 hover:text-blue-700">Google</a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">Trending</a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">New</a>
+                  <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-700">Trending</a>
+                  <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-700">New</a>
                 </div>
                 
               
-                <h3 className="text-xl font-bold mb-4 text-gray-900 leading-tight">
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">
                   Loudest à la Madison #1 (L'integral)
                 </h3>
                 
               
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                   We focus on ergonomics and meeting you where you work. It's only a keystroke away.
                 </p>
                 
              
-                <div className="flex justify-between items-center mb-4 text-sm text-gray-500">
+                <div className="flex justify-between items-center mb-4 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center">
                     <Calendar size={16} className="mr-1" />
                     22 April 2021
@@ -440,7 +443,7 @@ const HomePage = () => {
             </div>
             
           
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
            
               <div className="relative">
                 <img 
@@ -458,22 +461,22 @@ const HomePage = () => {
               
                 <div className="flex space-x-4 mb-4 text-sm">
                   <a href="#" className="text-blue-500 hover:text-blue-700">Google</a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">Trending</a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">New</a>
+                  <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-700">Trending</a>
+                  <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-700">New</a>
                 </div>
                 
                
-                <h3 className="text-xl font-bold mb-4 text-gray-900 leading-tight">
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">
                   Loudest à la Madison #1 (L'integral)
                 </h3>
                 
                
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                   We focus on ergonomics and meeting you where you work. It's only a keystroke away.
                 </p>
                 
               
-                <div className="flex justify-between items-center mb-4 text-sm text-gray-500">
+                <div className="flex justify-between items-center mb-4 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center">
                     <Calendar size={16} className="mr-1" />
                     22 April 2021
@@ -493,7 +496,7 @@ const HomePage = () => {
             </div>
             
          
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
           
               <div className="relative">
                 <img 
@@ -511,22 +514,22 @@ const HomePage = () => {
              
                 <div className="flex space-x-4 mb-4 text-sm">
                   <a href="#" className="text-blue-500 hover:text-blue-700">Google</a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">Trending</a>
-                  <a href="#" className="text-gray-500 hover:text-gray-700">New</a>
+                  <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-700">Trending</a>
+                  <a href="#" className="text-gray-500 dark:text-gray-400 hover:text-gray-700">New</a>
                 </div>
                 
              
-                <h3 className="text-xl font-bold mb-4 text-gray-900 leading-tight">
+                <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white leading-tight">
                   Loudest à la Madison #1 (L'integral)
                 </h3>
                 
                
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
                   We focus on ergonomics and meeting you where you work. It's only a keystroke away.
                 </p>
                 
               
-                <div className="flex justify-between items-center mb-4 text-sm text-gray-500">
+                <div className="flex justify-between items-center mb-4 text-sm text-gray-500 dark:text-gray-400">
                   <span className="flex items-center">
                     <Calendar size={16} className="mr-1" />
                     22 April 2021

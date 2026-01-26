@@ -82,23 +82,26 @@ export const fetchRoles = () => {
   };
 };
 
-export const loginUser = (credentials, rememberMe = false) => {
+export const loginUser = (credentials) => {
   return (dispatch) => {
     dispatch(loginStart());
     
     return axios.post('https://workintech-fe-ecommerce.onrender.com/login', credentials)
       .then(response => {
-        const { user, token } = response.data;
+        const { token, name, email, role_id } = response.data;
         
+        // User objesi oluştur (API direkt user objesi döndürmüyor)
+        const user = { name, email, role_id };
         
+        // Token'ı header'a ekle
         setAuthHeader(token);
         
-       
-        if (rememberMe && token) {
+        // Token'ı localStorage'a kaydet
+        if (token) {
           localStorage.setItem('token', token);
         }
         
-       
+        // Kullanıcıyı Redux'a kaydet
         dispatch(loginSuccess(user));
         return { user, token };
       })
@@ -127,27 +130,24 @@ export const verifyToken = (token) => {
   return (dispatch) => {
     dispatch(verifyTokenStart());
     
-    
     setAuthHeader(token);
     
     return axios.get('https://workintech-fe-ecommerce.onrender.com/verify')
       .then(response => {
-        const { user, token: newToken } = response.data;
+        const { token: newToken, name, email, role_id } = response.data;
         
-       
+        // User objesi oluştur (API direkt user objesi döndürmüyor)
+        const user = { name, email, role_id };
+        
         if (newToken) {
           localStorage.setItem('token', newToken);
           setAuthHeader(newToken);
         }
         
-      
         dispatch(verifyTokenSuccess(user, newToken || token));
         return { user, token: newToken || token };
       })
       .catch(error => {
-        console.error('Token verification failed:', error);
-        
-        
         removeAuthToken();
         removeAuthHeader();
         

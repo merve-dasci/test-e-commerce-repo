@@ -1,16 +1,205 @@
-# React + Vite
+# 🛒 E-Commerce Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern ve tam özellikli bir e-ticaret web uygulaması. React, Redux ve TailwindCSS ile geliştirilmiştir.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19.1-61DAFB?logo=react&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-5.0-764ABC?logo=redux&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?logo=tailwindcss&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.1-646CFF?logo=vite&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Özellikler
 
-## React Compiler
+### 🛍️ Alışveriş
+- ✅ Ürün listeleme ve filtreleme
+- ✅ Kategori bazlı ürün görüntüleme
+- ✅ Ürün arama fonksiyonu
+- ✅ Ürün detay sayfası
+- ✅ Sepet yönetimi (ekleme, çıkarma, miktar güncelleme)
+- ✅ Favorilere ekleme sistemi
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 👤 Kullanıcı İşlemleri
+- ✅ Kullanıcı kayıt (Customer/Store)
+- ✅ Kullanıcı girişi
+- ✅ Token tabanlı kimlik doğrulama
+- ✅ Korumalı rotalar
+- ✅ Adres yönetimi
+- ✅ Kredi kartı yönetimi
 
-## Expanding the ESLint configuration
+### 🛒 Sipariş İşlemleri
+- ✅ Sipariş oluşturma
+- ✅ Sipariş geçmişi görüntüleme
+- ✅ Sipariş durumu takibi
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🎨 UI/UX
+- ✅ **Dark/Light Mode** desteği
+- ✅ Tam responsive tasarım (Mobile-first)
+- ✅ Modern ve kullanıcı dostu arayüz
+- ✅ Toast bildirimleri
+- ✅ Loading skeleton'lar
+- ✅ Smooth animasyonlar
+
+### ⚡ Performans
+- ✅ Lazy loading (Code splitting)
+- ✅ Optimized images
+- ✅ API caching
+
+## 🛠️ Teknolojiler
+
+| Kategori | Teknoloji |
+|----------|-----------|
+| **Frontend** | React 19, JSX |
+| **State Management** | Redux, Redux Thunk |
+| **Routing** | React Router v5 |
+| **Styling** | TailwindCSS 3.4 |
+| **HTTP Client** | Axios |
+| **Form Handling** | React Hook Form |
+| **Icons** | Lucide React |
+| **Notifications** | React Toastify |
+| **Build Tool** | Vite |
+
+## 📁 Proje Yapısı
+
+```
+src/
+├── api/              # API client ve endpoint tanımları
+├── assets/           # Static dosyalar (images, fonts)
+├── components/       # Yeniden kullanılabilir UI bileşenleri
+│   ├── Categories.jsx
+│   ├── ErrorBoundary.jsx
+│   ├── LoadingSpinner.jsx
+│   ├── ProductCard.jsx
+│   ├── ProtectedRoute.jsx
+│   ├── Skeleton.jsx
+│   └── ThemeToggle.jsx
+├── context/          # React Context (Theme)
+├── data/             # Static data (cities, etc.)
+├── layout/           # Layout bileşenleri
+│   ├── Header.jsx
+│   ├── Footer.jsx
+│   └── PageContent.jsx
+├── pages/            # Sayfa bileşenleri
+│   ├── HomePage.jsx
+│   ├── Shop.jsx
+│   ├── ProductDetail.jsx
+│   ├── Cart.jsx
+│   ├── Favorites.jsx
+│   ├── Login.jsx
+│   ├── SignUp.jsx
+│   ├── CreateOrder.jsx
+│   ├── Orders.jsx
+│   └── ...
+├── store/            # Redux store
+│   ├── actions/      # Action creators
+│   ├── reducers/     # Reducers
+│   └── index.js      # Store configuration
+├── utils/            # Utility fonksiyonlar
+├── App.jsx           # Ana uygulama bileşeni
+├── main.jsx          # Entry point
+└── index.css         # Global stiller
+```
+
+## 🚀 Kurulum
+
+### Gereksinimler
+- Node.js 18+ 
+- npm veya yarn
+
+### Adımlar
+
+1. **Repository'yi klonlayın**
+```bash
+git clone https://github.com/merve-dasci/test-e-commerce-repo.git
+cd e-commerce-project
+```
+
+2. **Bağımlılıkları yükleyin**
+```bash
+npm install
+```
+
+3. **Development sunucusunu başlatın**
+```bash
+npm run dev
+```
+
+4. **Tarayıcıda açın**
+```
+http://localhost:5173
+```
+
+## 📜 Komutlar
+
+| Komut | Açıklama |
+|-------|----------|
+| `npm run dev` | Development sunucusunu başlatır |
+| `npm run build` | Production build oluşturur |
+| `npm run preview` | Production build'i önizler |
+| `npm run lint` | ESLint ile kod kontrolü yapar |
+
+## 🌐 API
+
+Proje [Workintech E-Commerce API](https://workintech-fe-ecommerce.onrender.com) kullanmaktadır.
+
+### Temel Endpoints
+- `POST /signup` - Kullanıcı kaydı
+- `POST /login` - Kullanıcı girişi
+- `GET /products` - Ürün listesi
+- `GET /categories` - Kategoriler
+- `GET /order` - Siparişler
+- `POST /order` - Sipariş oluştur
+
+## 🎯 Ekran Görüntüleri
+
+### Ana Sayfa
+- Hero slider
+- Kategori kartları
+- Öne çıkan ürünler
+- Blog yazıları
+
+### Ürün Listesi
+- Grid/Liste görünümü
+- Filtreleme (kategori, fiyat)
+- Sıralama
+- Arama
+
+### Sepet
+- Ürün listesi
+- Miktar kontrolü
+- Fiyat özeti
+- Sipariş butonu
+
+## 🔐 Güvenlik Özellikleri
+
+- Token tabanlı authentication
+- Protected routes
+- API interceptors
+- Form validation
+
+## 📱 Responsive Tasarım
+
+Uygulama tüm cihazlarda sorunsuz çalışır:
+- 📱 Mobile (320px+)
+- 📱 Tablet (768px+)
+- 💻 Desktop (1024px+)
+- 🖥️ Large Desktop (1440px+)
+
+## 🌙 Dark Mode
+
+Kullanıcı tercihine göre otomatik veya manuel tema değişimi:
+- Sistem temasını algılama
+- localStorage'da tercih saklama
+- Smooth geçiş animasyonları
+
+## 👨‍💻 Geliştirici
+
+**Merve Daşcı**
+
+- GitHub: [@merve-dasci](https://github.com/merve-dasci)
+
+## 📄 Lisans
+
+Bu proje eğitim amaçlı geliştirilmiştir.
+
+---
+
+⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!

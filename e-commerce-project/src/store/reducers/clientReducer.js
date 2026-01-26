@@ -9,7 +9,17 @@ import {
   LOGOUT,
   VERIFY_TOKEN_START,
   VERIFY_TOKEN_SUCCESS,
-  VERIFY_TOKEN_FAILURE
+  VERIFY_TOKEN_FAILURE,
+  SET_ADDRESS_LIST,
+  ADD_ADDRESS,
+  UPDATE_ADDRESS,
+  DELETE_ADDRESS,
+  SET_ADDRESS_LOADING,
+  SET_CREDIT_CARDS,
+  ADD_CREDIT_CARD,
+  UPDATE_CREDIT_CARD,
+  DELETE_CREDIT_CARD,
+  SET_CARD_LOADING
 } from '../actionTypes';
 
 const initialState = {
@@ -21,7 +31,9 @@ const initialState = {
   language: '',
   isLoading: false,
   isLoggedIn: false,
-  loginError: null
+  loginError: null,
+  addressLoading: false,
+  cardLoading: false
 };
 
 const clientReducer = (state = initialState, action) => {
@@ -78,6 +90,7 @@ const clientReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {},
+        addressList: [],
         isLoading: false,
         isLoggedIn: false,
         loginError: null
@@ -105,6 +118,72 @@ const clientReducer = (state = initialState, action) => {
         isLoading: false,
         isLoggedIn: false,
         loginError: action.payload
+      };
+
+    // Address Actions
+    case SET_ADDRESS_LIST:
+      return {
+        ...state,
+        addressList: action.payload
+      };
+
+    case ADD_ADDRESS:
+      return {
+        ...state,
+        addressList: [...state.addressList, action.payload]
+      };
+
+    case UPDATE_ADDRESS:
+      return {
+        ...state,
+        addressList: state.addressList.map(addr => 
+          addr.id === action.payload.id ? action.payload : addr
+        )
+      };
+
+    case DELETE_ADDRESS:
+      return {
+        ...state,
+        addressList: state.addressList.filter(addr => addr.id !== action.payload)
+      };
+
+    case SET_ADDRESS_LOADING:
+      return {
+        ...state,
+        addressLoading: action.payload
+      };
+
+    // Credit Card Actions
+    case SET_CREDIT_CARDS:
+      return {
+        ...state,
+        creditCards: action.payload
+      };
+
+    case ADD_CREDIT_CARD:
+      return {
+        ...state,
+        creditCards: [...state.creditCards, action.payload]
+      };
+
+    case UPDATE_CREDIT_CARD:
+      return {
+        ...state,
+        creditCards: state.creditCards.map(card => 
+          card.id === action.payload.id ? action.payload : card
+        )
+      };
+
+    case DELETE_CREDIT_CARD:
+      return {
+        ...state,
+        creditCards: state.creditCards.filter(card => card.id !== action.payload)
+      };
+
+    case SET_CARD_LOADING:
+      return {
+        ...state,
+        cardLoading: action.payload
       };
     
     default:

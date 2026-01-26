@@ -1,334 +1,287 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Star, Heart, ShoppingCart, Eye } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useHistory, Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Star, Heart, ShoppingCart, Eye, ArrowLeft } from 'lucide-react';
+import { fetchProduct } from '../store/actions/productActions';
+import { addToCart } from '../store/actions/shoppingCartActions';
+import { toggleFavorite } from '../store/actions/favoritesActions';
+import { ProductDetailSkeleton } from '../components/Skeleton';
+import { toast } from 'react-toastify';
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { productId, id, gender, categoryName } = useParams();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(0);
   
+  const { currentProduct, fetchState } = useSelector(state => state.product);
+  const favorites = useSelector(state => state.shoppingCart.favorites);
+  
+  const actualProductId = productId || id;
+  
+  // Bu ürün favorilerde mi?
+  const isFavorite = favorites?.some(fav => fav.id === currentProduct?.id);
 
-  
-  const product = {
-    id: 1,
-    title: "Floating Phone",
-    rating: 4.5,
-    reviewCount: 10,
-    price: "$1,139.33",
-    availability: "In Stock",
-    description: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met.",
-    colors: ["#23A6F0", "#23856D", "#E77C40", "#252B42"],
-    images: [
-      "/images/shoppage/card-cover-11.jpg",
-      "/images/shoppage/card-cover-22.jpg",
-      "/images/shoppage/card-cover-33.jpg"
-    ]
+  useEffect(() => {
+    if (actualProductId) {
+      dispatch(fetchProduct(actualProductId));
+    }
+  }, [dispatch, actualProductId]);
+
+  const handleGoBack = () => {
+    history.goBack();
   };
 
- 
-  const bestsellerProducts = [
-    {
-      id: 1,
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-11.jpg"
-    },
-    {
-      id: 2,
-      title: "Graphic Design", 
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-22.jpg"
-    },
-    {
-      id: 3,
-      title: "Graphic Design",
-      department: "English Department", 
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-33.jpg"
-    },
-    {
-      id: 4,
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48", 
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-44.jpg"
-    },
-    {
-      id: 5,
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-55.jpg"
-    },
-    {
-      id: 6,
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48", 
-      image: "/images/shoppage/card-cover-11.jpg"
-    },
-    {
-      id: 7,
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-22.jpg"
-    },
-    {
-      id: 8,
-      title: "Graphic Design",
-      department: "English Department",
-      originalPrice: "$16.48",
-      salePrice: "$6.48",
-      image: "/images/shoppage/card-cover-33.jpg"
-    }
-  ];
+  const handleAddToCart = () => {
+    dispatch(addToCart(currentProduct));
+    toast.success(`${currentProduct.name} sepete eklendi!`);
+  };
 
-  const BestsellerCard = ({ product }) => (
-    <div className="bg-white group cursor-pointer">
-      <div className="relative overflow-hidden">
-        <img 
-          src={product.image}
-          alt={product.title}
-          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+  const handleToggleFavorite = () => {
+    dispatch(toggleFavorite(currentProduct));
+    if (isFavorite) {
+      toast.success('Ürün favorilerden çıkarıldı!');
+    } else {
+      toast.success('Ürün favorilere eklendi!');
+    }
+  };
+
+  if (fetchState === 'FETCHING' || !currentProduct) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        <ProductDetailSkeleton />
       </div>
-      <div className="p-4 text-center">
-        <h3 className="font-bold text-lg mb-2 text-gray-900">{product.title}</h3>
-        <p className="text-gray-500 text-sm mb-4">{product.department}</p>
-        <div className="flex justify-center items-center gap-2">
-          <span className="text-gray-400 line-through">{product.originalPrice}</span>
-          <span className="text-green-600 font-bold">{product.salePrice}</span>
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
+
+  const product = {
+    id: currentProduct.id,
+    name: currentProduct.name,
+    description: currentProduct.description,
+    price: currentProduct.price,
+    stock: currentProduct.stock,
+    rating: currentProduct.rating || 0,
+    sell_count: currentProduct.sell_count || 0,
+    images: currentProduct.images?.length > 0 
+      ? currentProduct.images.map(img => img.url) 
+      : ['/images/placeholder.jpg']
+  };
+
+  const availability = product.stock > 0 ? 'Stokta Var' : 'Stokta Yok';
 
   return (
-    <div className="min-h-screen bg-white">
-     
-      <nav className="py-4 px-4 bg-gray-50">
-        <div className="max-w-1440 mx-auto">
-          <Link to="/" className="text-gray-600 hover:text-gray-800">Home</Link>
-          <span className="mx-2 text-gray-400">/</span>
-          <Link to="/shop" className="text-gray-600 hover:text-gray-800">Shop</Link>
+    <div className="min-h-screen bg-white dark:bg-gray-900">
+      <nav className="py-3 sm:py-4 px-3 sm:px-4 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+          <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm flex-wrap">
+            <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Anasayfa</Link>
+            <span className="text-gray-400 dark:text-gray-500">/</span>
+            <Link to="/shop" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Shop</Link>
+            {gender && categoryName && (
+              <>
+                <span className="text-gray-400 dark:text-gray-500">/</span>
+                <span className="text-gray-800 dark:text-gray-200 capitalize">{gender === 'kadin' ? 'Kadın' : 'Erkek'}</span>
+                <span className="text-gray-400 dark:text-gray-500">/</span>
+                <span className="text-gray-800 dark:text-gray-200 capitalize">{categoryName.replace(/-/g, ' ')}</span>
+              </>
+            )}
+          </div>
+          <button
+            onClick={handleGoBack}
+            className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors text-gray-700 dark:text-gray-200 font-medium text-sm"
+          >
+            <ArrowLeft size={18} />
+            <span className="hidden sm:inline">Geri Dön</span>
+          </button>
         </div>
       </nav>
 
-     
       <div className="block lg:hidden">
-    
         <div className="relative">
-          <div className="aspect-square bg-gray-100">
+          <div className="aspect-square bg-gray-100 dark:bg-gray-800">
             <img
               src={product.images[selectedImage]}
-              alt={product.title}
+              alt={product.name}
               className="w-full h-full object-cover"
             />
-          
-            <button 
-              onClick={() => setSelectedImage(Math.max(0, selectedImage - 1))}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded-full"
-              disabled={selectedImage === 0}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button 
-              onClick={() => setSelectedImage(Math.min(product.images.length - 1, selectedImage + 1))}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 p-2 rounded-full"
-              disabled={selectedImage === product.images.length - 1}
-            >
-              <ChevronRight size={20} />
-            </button>
+            {product.images.length > 1 && (
+              <>
+                <button 
+                  onClick={() => setSelectedImage(Math.max(0, selectedImage - 1))}
+                  className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 bg-opacity-75 p-1.5 sm:p-2 rounded-full"
+                  disabled={selectedImage === 0}
+                >
+                  <ChevronLeft size={18} className="sm:w-5 sm:h-5 text-gray-700 dark:text-gray-200" />
+                </button>
+                <button 
+                  onClick={() => setSelectedImage(Math.min(product.images.length - 1, selectedImage + 1))}
+                  className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-700 bg-opacity-75 p-1.5 sm:p-2 rounded-full"
+                  disabled={selectedImage === product.images.length - 1}
+                >
+                  <ChevronRight size={18} className="sm:w-5 sm:h-5 text-gray-700 dark:text-gray-200" />
+                </button>
+              </>
+            )}
           </div>
           
-        
-          <div className="flex gap-2 p-4 overflow-x-auto">
-            {product.images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedImage(index)}
-                className={`flex-shrink-0 w-16 h-16 rounded border-2 overflow-hidden ${
-                  selectedImage === index ? 'border-blue-500' : 'border-gray-200'
-                }`}
-              >
-                <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
-              </button>
-            ))}
-          </div>
+          {product.images.length > 1 && (
+            <div className="flex gap-2 p-3 sm:p-4 overflow-x-auto">
+              {product.images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(index)}
+                  className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded border-2 overflow-hidden ${
+                    selectedImage === index ? 'border-blue-500' : 'border-gray-200 dark:border-gray-600'
+                  }`}
+                >
+                  <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-      
-        <div className="p-4">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{product.title}</h1>
+        <div className="p-3 sm:p-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">{product.name}</h1>
           
-        
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-3 sm:mb-4">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  size={16}
-                  className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                  size={14}
+                  className={`sm:w-4 sm:h-4 ${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300 dark:text-gray-600'}`}
                 />
               ))}
             </div>
-            <span className="text-sm text-gray-600">{product.reviewCount} Reviews</span>
+            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{product.rating.toFixed(1)}</span>
+            <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-500">| {product.sell_count} Satış</span>
           </div>
 
-       
-          <div className="mb-4">
-            <span className="text-2xl font-bold text-gray-900">{product.price}</span>
+          <div className="mb-3 sm:mb-4">
+            <span className="text-xl sm:text-2xl font-bold text-blue-600">${product.price}</span>
           </div>
 
-       
-          <div className="mb-6">
-            <span className="text-sm text-gray-600">Availability: </span>
-            <span className="text-sm font-medium text-blue-600">{product.availability}</span>
+          <div className="mb-4 sm:mb-6">
+            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Stok Durumu: </span>
+            <span className={`text-xs sm:text-sm font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+              {availability} ({product.stock} adet)
+            </span>
           </div>
 
-       
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
             {product.description}
           </p>
 
-        
-          <div className="mb-6">
-            <div className="flex gap-2">
-              {product.colors.map((color, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedColor(index)}
-                  className={`w-8 h-8 rounded-full border-2 ${
-                    selectedColor === index ? 'border-gray-800' : 'border-gray-200'
-                  }`}
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-          </div>
-
-       
           <div className="flex flex-col gap-3">
-            <button className="bg-blue-500 text-white py-3 px-6 rounded font-medium hover:bg-blue-600 transition-colors">
-              Select Options
+            <button 
+              onClick={handleAddToCart}
+              className="bg-blue-500 text-white py-2.5 sm:py-3 px-6 rounded font-medium hover:bg-blue-600 transition-colors text-sm sm:text-base"
+            >
+              Sepete Ekle
             </button>
             
             <div className="flex gap-2">
-              <button className="flex items-center justify-center w-12 h-12 border border-gray-300 rounded hover:bg-gray-50">
-                <Heart size={20} />
+              <button 
+                onClick={handleToggleFavorite}
+                className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                  isFavorite ? 'border-red-500 bg-red-50 dark:bg-red-900/30' : 'border-gray-300 dark:border-gray-600'
+                }`}
+              >
+                <Heart size={18} className={`sm:w-5 sm:h-5 ${isFavorite ? 'text-red-500 fill-red-500' : 'dark:text-gray-400'}`} />
               </button>
-              <button className="flex items-center justify-center w-12 h-12 border border-gray-300 rounded hover:bg-gray-50">
-                <ShoppingCart size={20} />
+              <button className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                <ShoppingCart size={18} className="sm:w-5 sm:h-5 dark:text-gray-400" />
               </button>
-              <button className="flex items-center justify-center w-12 h-12 border border-gray-300 rounded hover:bg-gray-50">
-                <Eye size={20} />
+              <button className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                <Eye size={18} className="sm:w-5 sm:h-5 dark:text-gray-400" />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-    
       <div className="hidden lg:block">
-        <div className="max-w-1440 mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="grid grid-cols-2 gap-12">
-          
             <div>
-              <div className="aspect-square bg-gray-100 mb-4">
+              <div className="aspect-square bg-gray-100 dark:bg-gray-800 mb-4">
                 <img
                   src={product.images[selectedImage]}
-                  alt={product.title}
+                  alt={product.name}
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>
-              <div className="flex gap-2">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`w-20 h-20 rounded border-2 overflow-hidden ${
-                      selectedImage === index ? 'border-blue-500' : 'border-gray-200'
-                    }`}
-                  >
-                    <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
+              {product.images.length > 1 && (
+                <div className="flex gap-2">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`w-20 h-20 rounded border-2 overflow-hidden ${
+                        selectedImage === index ? 'border-blue-500' : 'border-gray-200 dark:border-gray-600'
+                      }`}
+                    >
+                      <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
-           
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">{product.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{product.name}</h1>
               
-         
               <div className="flex items-center gap-2 mb-6">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       size={20}
-                      className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                      className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300 dark:text-gray-600'}`}
                     />
                   ))}
                 </div>
-                <span className="text-gray-600">{product.reviewCount} Reviews</span>
+                <span className="text-gray-600 dark:text-gray-400">{product.rating.toFixed(1)}</span>
+                <span className="text-gray-400 dark:text-gray-500">| {product.sell_count} Satış</span>
               </div>
 
-            
               <div className="mb-6">
-                <span className="text-3xl font-bold text-gray-900">{product.price}</span>
+                <span className="text-3xl font-bold text-blue-600">${product.price}</span>
               </div>
 
-            
               <div className="mb-8">
-                <span className="text-gray-600">Availability: </span>
-                <span className="font-medium text-blue-600">{product.availability}</span>
+                <span className="text-gray-600 dark:text-gray-400">Stok Durumu: </span>
+                <span className={`font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {availability} ({product.stock} adet)
+                </span>
               </div>
 
-          
-              <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+              <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed text-lg">
                 {product.description}
               </p>
 
-            
-              <div className="mb-8">
-                <div className="flex gap-3">
-                  {product.colors.map((color, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedColor(index)}
-                      className={`w-10 h-10 rounded-full border-2 ${
-                        selectedColor === index ? 'border-gray-800' : 'border-gray-200'
-                      }`}
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-          
               <div className="flex items-center gap-4">
-                <button className="bg-blue-500 text-white py-3 px-8 rounded font-medium hover:bg-blue-600 transition-colors">
-                  Select Options
+                <button 
+                  onClick={handleAddToCart}
+                  className="bg-blue-500 text-white py-3 px-8 rounded font-medium hover:bg-blue-600 transition-colors"
+                >
+                  Sepete Ekle
                 </button>
                 
-                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 rounded hover:bg-gray-50">
-                  <Heart size={24} />
+                <button 
+                  onClick={handleToggleFavorite}
+                  className={`flex items-center justify-center w-12 h-12 border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                    isFavorite ? 'border-red-500 bg-red-50 dark:bg-red-900/30' : 'border-gray-300 dark:border-gray-600'
+                  }`}
+                >
+                  <Heart size={24} className={isFavorite ? 'text-red-500 fill-red-500' : 'dark:text-gray-400'} />
                 </button>
-                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 rounded hover:bg-gray-50">
-                  <ShoppingCart size={24} />
+                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <ShoppingCart size={24} className="dark:text-gray-400" />
                 </button>
-                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 rounded hover:bg-gray-50">
-                  <Eye size={24} />
+                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <Eye size={24} className="dark:text-gray-400" />
                 </button>
               </div>
             </div>
@@ -336,66 +289,44 @@ const ProductDetail = () => {
         </div>
       </div>
 
-    
-      <div className="border-t border-gray-200 mt-8">
-        <div className="max-w-1440 mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
+      <div className="border-t border-gray-200 dark:border-gray-700 mt-6 sm:mt-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">Description</h3>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                the quick fox jumps over the lazy dog
-              </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                the quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                the quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog.
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Ürün Açıklaması</h3>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm sm:text-base">
+                {product.description}
               </p>
             </div>
 
-         
             <div>
-              <h3 className="text-xl font-bold mb-4">Additional Information</h3>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                the quick fox jumps over the lazy dog
-              </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                the quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                the quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog.
-              </p>
-            </div>
-
-           
-            <div>
-              <h3 className="text-xl font-bold mb-4">Reviews ({product.reviewCount})</h3>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                the quick fox jumps over the lazy dog
-              </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                the quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                the quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog. The quick fox jumps over the lazy dog.
-              </p>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Ürün Bilgileri</h3>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+                  <span className="text-gray-600 dark:text-gray-400">Ürün ID:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{product.id}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+                  <span className="text-gray-600 dark:text-gray-400">Fiyat:</span>
+                  <span className="font-medium text-blue-600">${product.price}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+                  <span className="text-gray-600 dark:text-gray-400">Stok:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{product.stock} adet</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+                  <span className="text-gray-600 dark:text-gray-400">Puan:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{product.rating.toFixed(1)} / 5</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+                  <span className="text-gray-600 dark:text-gray-400">Satış Sayısı:</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{product.sell_count}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-    
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-1440 mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-8">BESTSELLER PRODUCTS</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {bestsellerProducts.map((product) => (
-              <BestsellerCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
