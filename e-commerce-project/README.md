@@ -47,6 +47,7 @@ Modern ve tam özellikli bir e-ticaret web uygulaması. React, Redux ve Tailwind
 - ✅ Unit testleri (Vitest + React Testing Library)
 - ✅ Component testleri
 - ✅ Redux reducer testleri
+- ✅ E2E testleri (Cypress)
 - ✅ %85+ code coverage
 
 ## 🛠️ Teknolojiler
@@ -62,9 +63,10 @@ Modern ve tam özellikli bir e-ticaret web uygulaması. React, Redux ve Tailwind
 | **Icons** | Lucide React |
 | **Notifications** | React Toastify |
 | **Build Tool** | Vite |
-| **Testing** | Vitest, React Testing Library |
+| **Unit Testing** | Vitest, React Testing Library |
+| **E2E Testing** | Cypress |
 
-## 📁 Proje Yapısı
+##  Proje Yapısı
 
 ```
 src/
@@ -105,7 +107,7 @@ src/
 └── index.css         # Global stiller
 ```
 
-## 🚀 Kurulum
+##  Kurulum
 
 ### Gereksinimler
 - Node.js 18+ 
@@ -134,7 +136,7 @@ npm run dev
 http://localhost:5173
 ```
 
-## 📜 Komutlar
+##  Komutlar
 
 | Komut | Açıklama |
 |-------|----------|
@@ -143,7 +145,7 @@ http://localhost:5173
 | `npm run preview` | Production build'i önizler |
 | `npm run lint` | ESLint ile kod kontrolü yapar |
 
-## 🌐 API
+##  API
 
 Proje [Workintech E-Commerce API](https://workintech-fe-ecommerce.onrender.com) kullanmaktadır.
 
@@ -155,7 +157,7 @@ Proje [Workintech E-Commerce API](https://workintech-fe-ecommerce.onrender.com) 
 - `GET /order` - Siparişler
 - `POST /order` - Sipariş oluştur
 
-## 🎯 Ekran Görüntüleri
+##  Ekran Görüntüleri
 
 ### Ana Sayfa
 - Hero slider
@@ -175,14 +177,14 @@ Proje [Workintech E-Commerce API](https://workintech-fe-ecommerce.onrender.com) 
 - Fiyat özeti
 - Sipariş butonu
 
-## 🔐 Güvenlik Özellikleri
+##  Güvenlik Özellikleri
 
 - Token tabanlı authentication
 - Protected routes
 - API interceptors
 - Form validation
 
-## 📱 Responsive Tasarım
+##  Responsive Tasarım
 
 Uygulama tüm cihazlarda sorunsuz çalışır:
 - 📱 Mobile (320px+)
@@ -190,16 +192,18 @@ Uygulama tüm cihazlarda sorunsuz çalışır:
 - 💻 Desktop (1024px+)
 - 🖥️ Large Desktop (1440px+)
 
-## 🌙 Dark Mode
+##  Dark Mode
 
 Kullanıcı tercihine göre otomatik veya manuel tema değişimi:
 - Sistem temasını algılama
 - localStorage'da tercih saklama
 - Smooth geçiş animasyonları
 
-## 🧪 Test
+##  Test
 
-Projede Vitest ve React Testing Library ile kapsamlı testler bulunmaktadır.
+Projede Vitest, React Testing Library ve Cypress ile kapsamlı unit, integration ve E2E testler bulunmaktadır.
+
+### Unit & Integration Testleri
 
 ```bash
 # Testleri çalıştır
@@ -212,18 +216,34 @@ npm run test
 npm run test:coverage
 ```
 
-### Test Kapsamı
+**Test Kapsamı:**
 - **Component Testleri**: ProductCard, ThemeToggle, ErrorBoundary
 - **Redux Testleri**: shoppingCartReducer, productReducer
 - **Coverage**: %85+
 
-## 👨‍💻 Geliştirici
+### E2E Testleri (Cypress)
+
+```bash
+# Cypress'i aç (interaktif mod)
+npx cypress open
+
+# Headless modda testleri çalıştır
+npx cypress run
+```
+
+**E2E Test Senaryoları:**
+- **Homepage**: Sayfa yükleme, navigasyon, dark mode toggle
+- **Authentication**: Login, signup, form validation, protected routes
+- **Shopping Cart**: Ürün ekleme, sepet işlemleri
+- **Favorites**: Favori ekleme/çıkarma, localStorage persistence
+
+##  Geliştirici
 
 **Merve Daşcı**
 
 - GitHub: [@merve-dasci](https://github.com/merve-dasci)
 
-## 📄 Lisans
+##  Lisans
 
 Bu proje eğitim amaçlı geliştirilmiştir.
 
