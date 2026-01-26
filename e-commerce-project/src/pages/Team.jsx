@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SimpleHeader from '../components/SimpleHeader';
 
 const Team = () => {
  
@@ -130,32 +131,25 @@ const Team = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-     
-      <nav className="py-4 px-4 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-1440 mx-auto">
-          <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">Home</Link>
-          <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-          <span className="text-gray-900 dark:text-white">Team</span>
-        </div>
-      </nav>
-
+    <>
+      <SimpleHeader />
+      <div className="min-h-screen bg-white dark:bg-gray-900">
     
-      <section className="py-12 lg:py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-1440 mx-auto px-4 text-center">
-          <p className="text-sm font-medium mb-4 tracking-wider text-blue-500">
-            WHAT WE DO
-          </p>
-          <h1 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
-            Innovation tailored for you
-          </h1>
+        <section className="py-12 lg:py-20 bg-white dark:bg-gray-900">
+          <div className="max-w-1440 mx-auto px-4 text-center">
+            <p className="text-sm font-medium mb-4 tracking-wider text-blue-500">
+              WHAT WE DO
+            </p>
+            <h1 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
+              Innovation tailored for you
+            </h1>
           
          
-          <div className="flex justify-center items-center gap-2 mb-12">
-            <Link to="/" className="text-gray-900 dark:text-white font-bold">Home</Link>
-            <span className="text-gray-400 dark:text-gray-500">/</span>
-            <span className="text-gray-500 dark:text-gray-400">Team</span>
-          </div>
+            <div className="flex justify-center items-center gap-2 mb-12">
+              <Link to="/" className="text-gray-900 dark:text-white font-bold">Home</Link>
+              <span className="text-gray-400 dark:text-gray-500">&gt;</span>
+              <span className="text-gray-500 dark:text-gray-400">Team</span>
+            </div>
 
           
           <div className="hidden lg:block mb-16">
@@ -258,7 +252,8 @@ const Team = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 

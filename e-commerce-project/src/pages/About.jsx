@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Play, Star, CreditCard } from 'lucide-react';
 import Features from '../components/Features';
+import SimpleHeader from '../components/SimpleHeader';
 
 const About = () => {
   
@@ -33,41 +34,24 @@ const About = () => {
     }
   ];
 
-  
-  const companies = [
-    { name: "Hooli", icon: "fab fa-hooli" },
-    { name: "Lyft", icon: "fab fa-lyft" },
-    { name: "Pied Piper", icon: "fab fa-pied-piper-alt" },
-    { name: "Stripe", icon: "fab fa-stripe" },
-    { name: "AWS", icon: "fab fa-aws" },
-    { name: "Reddit", icon: "fab fa-reddit" }
-  ];
-
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      
-      <nav className="py-4 px-4 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-1440 mx-auto">
-          <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white">Home</Link>
-          <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-          <span className="text-gray-900 dark:text-white">About</span>
-        </div>
-      </nav>
-
+    <>
+      <SimpleHeader />
+      <div className="min-h-screen bg-white dark:bg-gray-900">
    
-      <section className="py-12 lg:py-20">
-        <div className="max-w-1440 mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+        <section className="py-12 lg:py-20">
+          <div className="max-w-1440 mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
            
-            <div className="text-center lg:text-left">
-              <p className="text-sm font-medium mb-4 tracking-wider text-gray-600 dark:text-gray-400">
-                ABOUT COMPANY
-              </p>
-              <h1 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
-                ABOUT US
-              </h1>
-              <p className="text-lg mb-6 text-gray-600 dark:text-gray-400 leading-relaxed">
-                We know how large objects will act, 
+              <div className="text-center lg:text-left">
+                <p className="text-sm font-medium mb-4 tracking-wider text-gray-600 dark:text-gray-400">
+                  ABOUT COMPANY
+                </p>
+                <h1 className="text-3xl lg:text-5xl font-bold mb-6 leading-tight text-gray-900 dark:text-white">
+                  ABOUT US
+                </h1>
+                <p className="text-lg mb-6 text-gray-600 dark:text-gray-400 leading-relaxed">
+                  We know how large objects will act, 
                 but things on a small scale
               </p>
               <button className="bg-blue-500 text-white px-8 py-3 rounded font-medium hover:bg-blue-600 transition-colors">
@@ -284,13 +268,38 @@ const About = () => {
             the two major realms of Classical physics: Newtonian mechanics
           </p>
 
-        
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-            {companies.map((company, index) => (
-              <div key={index} className="opacity-60 hover:opacity-100 transition-opacity flex items-center justify-center">
-                <i className={`${company.icon} text-4xl lg:text-5xl text-gray-600 dark:text-gray-400`}></i>
-              </div>
-            ))}
+          {/* Company Logos - Mobilde alt alta, web'de yan yana */}
+          <div className="flex flex-col md:flex-row md:flex-wrap justify-center items-center gap-8 md:gap-16">
+            <img 
+              src="/images/shoppage/Vector.png" 
+              alt="Hooli" 
+              className="h-10 md:h-12 opacity-60 hover:opacity-100 transition-opacity dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (1).png" 
+              alt="Lyft" 
+              className="h-10 md:h-12 opacity-60 hover:opacity-100 transition-opacity dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (2).png" 
+              alt="Leaf" 
+              className="h-10 md:h-12 opacity-60 hover:opacity-100 transition-opacity dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (3).png" 
+              alt="Stripe" 
+              className="h-10 md:h-12 opacity-60 hover:opacity-100 transition-opacity dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (4).png" 
+              alt="AWS" 
+              className="h-10 md:h-12 opacity-60 hover:opacity-100 transition-opacity dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (5).png" 
+              alt="Reddit" 
+              className="h-10 md:h-12 opacity-60 hover:opacity-100 transition-opacity dark:invert"
+            />
           </div>
         </div>
       </section>
@@ -329,7 +338,8 @@ const About = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 

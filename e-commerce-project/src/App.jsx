@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAuthToken } from './utils/auth';
@@ -28,6 +28,23 @@ const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { loadFavorites } from './store/actions/favoritesActions';
+
+// Layout component to conditionally show Header
+const Layout = ({ children }) => {
+  const location = useLocation();
+  // Pricing, About, Team ve Contact sayfalarında ana header'ı gizle (kendi header'ları var)
+  const hideMainHeader = ['/pricing', '/about', '/team', '/contact'].includes(location.pathname);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+      {!hideMainHeader && <Header />}
+      <PageContent>
+        {children}
+      </PageContent>
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   const dispatch = useDispatch();
@@ -63,38 +80,34 @@ function App() {
         theme="colored"
       />
       <Router>
-        <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-          <Header />
-          <PageContent>
-            <Suspense fallback={<div className="flex justify-center items-center h-96 text-gray-400 dark:text-gray-500">Yükleniyor...</div>}>
-              <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Route exact path="/shop" component={Shop} />
-                <Route exact path="/shop/:gender/:categoryName/:categoryId" component={Shop} />
-                <Route exact path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId" component={ProductDetail} />
-                <Route exact path="/product/:id" component={ProductDetail} />
-                <Route exact path="/cart" component={Cart} />
-                <ProtectedRoute exact path="/order">
-                  <CreateOrder />
-                </ProtectedRoute>
-                <ProtectedRoute exact path="/orders">
-                  <Orders />
-                </ProtectedRoute>
-                <Route exact path="/contact" component={Contact} />
-                <Route exact path="/team" component={Team} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/blog" component={Blog} />
-                <Route exact path="/pricing" component={Pricing} />
-                <Route exact path="/favorites" component={Favorites} />
-                <Route exact path="/signup" component={SignUp} />
-                <Route exact path="/login" component={Login} />
-               
-                <Route component={NotFound} />
-              </Switch>
-            </Suspense>
-          </PageContent>
-          <Footer />
-        </div>
+        <Layout>
+          <Suspense fallback={<div className="flex justify-center items-center h-96 text-gray-400 dark:text-gray-500">Yükleniyor...</div>}>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route exact path="/shop" component={Shop} />
+              <Route exact path="/shop/:gender/:categoryName/:categoryId" component={Shop} />
+              <Route exact path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId" component={ProductDetail} />
+              <Route exact path="/product/:id" component={ProductDetail} />
+              <Route exact path="/cart" component={Cart} />
+              <ProtectedRoute exact path="/order">
+                <CreateOrder />
+              </ProtectedRoute>
+              <ProtectedRoute exact path="/orders">
+                <Orders />
+              </ProtectedRoute>
+              <Route exact path="/contact" component={Contact} />
+              <Route exact path="/team" component={Team} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/blog" component={Blog} />
+              <Route exact path="/pricing" component={Pricing} />
+              <Route exact path="/favorites" component={Favorites} />
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/login" component={Login} />
+             
+              <Route component={NotFound} />
+            </Switch>
+          </Suspense>
+        </Layout>
       </Router>
     </ErrorBoundary>
   );

@@ -265,6 +265,53 @@ const Shop = () => {
           </div>
         </section>
       )}
+
+      {/* Big Companies Section */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+              Big Companies Are Here
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto text-sm md:text-base">
+              Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics
+            </p>
+          </div>
+          
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+            <img 
+              src="/images/shoppage/Vector.png" 
+              alt="Hooli" 
+              className="h-8 md:h-10 opacity-60 hover:opacity-100 transition-opacity grayscale dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (1).png" 
+              alt="Lyft" 
+              className="h-8 md:h-10 opacity-60 hover:opacity-100 transition-opacity grayscale dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (2).png" 
+              alt="Leaf" 
+              className="h-8 md:h-10 opacity-60 hover:opacity-100 transition-opacity grayscale dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (3).png" 
+              alt="Stripe" 
+              className="h-8 md:h-10 opacity-60 hover:opacity-100 transition-opacity grayscale dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (4).png" 
+              alt="AWS" 
+              className="h-8 md:h-10 opacity-60 hover:opacity-100 transition-opacity grayscale dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (5).png" 
+              alt="Reddit" 
+              className="h-8 md:h-10 opacity-60 hover:opacity-100 transition-opacity grayscale dark:invert"
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

@@ -227,6 +227,7 @@ const Header = () => {
               <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium">About</Link>
               <Link to="/blog" className="text-gray-700 hover:text-blue-600 font-medium">Blog</Link>
               <Link to="/contact" className="text-gray-700 hover:text-blue-600 font-medium">Contact</Link>
+              <Link to="/pricing" className="text-gray-700 hover:text-blue-600 font-medium">Pricing</Link>
               <Link to="/team" className="text-gray-700 hover:text-blue-600 font-medium">Team</Link>
               <Link to="/pages" className="text-gray-700 hover:text-blue-600 font-medium">Pages</Link>
             </nav>
@@ -598,10 +599,10 @@ const Header = () => {
               )}
               
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">Home</Link>
-              <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">Shop</Link>
+              <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">Product</Link>
+              <Link to="/pricing" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">Pricing</Link>
               <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">About</Link>
               <Link to="/contact" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">Contact</Link>
-              <Link to="/team" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">Team</Link>
               <Link to="/favorites" onClick={() => setIsMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600">
                 Favorilerim {favoritesCount > 0 && <span className="text-red-500">({favoritesCount})</span>}
               </Link>
