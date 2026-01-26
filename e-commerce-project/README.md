@@ -43,6 +43,12 @@ Modern ve tam özellikli bir e-ticaret web uygulaması. React, Redux ve Tailwind
 - ✅ Optimized images
 - ✅ API caching
 
+### 🧪 Test
+- ✅ Unit testleri (Vitest + React Testing Library)
+- ✅ Component testleri
+- ✅ Redux reducer testleri
+- ✅ %85+ code coverage
+
 ## 🛠️ Teknolojiler
 
 | Kategori | Teknoloji |
@@ -56,6 +62,7 @@ Modern ve tam özellikli bir e-ticaret web uygulaması. React, Redux ve Tailwind
 | **Icons** | Lucide React |
 | **Notifications** | React Toastify |
 | **Build Tool** | Vite |
+| **Testing** | Vitest, React Testing Library |
 
 ## 📁 Proje Yapısı
 
@@ -189,6 +196,26 @@ Kullanıcı tercihine göre otomatik veya manuel tema değişimi:
 - Sistem temasını algılama
 - localStorage'da tercih saklama
 - Smooth geçiş animasyonları
+
+## 🧪 Test
+
+Projede Vitest ve React Testing Library ile kapsamlı testler bulunmaktadır.
+
+```bash
+# Testleri çalıştır
+npm test
+
+# Watch modunda test
+npm run test
+
+# Coverage raporu
+npm run test:coverage
+```
+
+### Test Kapsamı
+- **Component Testleri**: ProductCard, ThemeToggle, ErrorBoundary
+- **Redux Testleri**: shoppingCartReducer, productReducer
+- **Coverage**: %85+
 
 ## 👨‍💻 Geliştirici
 
