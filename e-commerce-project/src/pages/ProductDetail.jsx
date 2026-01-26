@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Star, Heart, ShoppingCart, Eye, ArrowLeft } from 'lucide-react';
-import { fetchProduct } from '../store/actions/productActions';
+import { ChevronLeft, ChevronRight, Star, Heart, ShoppingCart, Eye, ArrowLeft, ChevronDown } from 'lucide-react';
+import { fetchProduct, fetchProducts } from '../store/actions/productActions';
 import { addToCart } from '../store/actions/shoppingCartActions';
 import { toggleFavorite } from '../store/actions/favoritesActions';
 import { ProductDetailSkeleton } from '../components/Skeleton';
@@ -13,8 +13,9 @@ const ProductDetail = () => {
   const history = useHistory();
   const { productId, id, gender, categoryName } = useParams();
   const [selectedImage, setSelectedImage] = useState(0);
+  const [activeTab, setActiveTab] = useState('description');
   
-  const { currentProduct, fetchState } = useSelector(state => state.product);
+  const { currentProduct, fetchState, productList } = useSelector(state => state.product);
   const favorites = useSelector(state => state.shoppingCart.favorites);
   
   const actualProductId = productId || id;
@@ -26,6 +27,8 @@ const ProductDetail = () => {
     if (actualProductId) {
       dispatch(fetchProduct(actualProductId));
     }
+    // Bestseller ürünleri çek
+    dispatch(fetchProducts({ limit: 8 }));
   }, [dispatch, actualProductId]);
 
   const handleGoBack = () => {
@@ -66,8 +69,6 @@ const ProductDetail = () => {
       ? currentProduct.images.map(img => img.url) 
       : ['/images/placeholder.jpg']
   };
-
-  const availability = product.stock > 0 ? 'Stokta Var' : 'Stokta Yok';
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
@@ -142,7 +143,7 @@ const ProductDetail = () => {
         </div>
 
         <div className="p-3 sm:p-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">{product.name}</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#252B42] dark:text-white mb-2">{product.name}</h1>
           
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
             <div className="flex">
@@ -154,47 +155,54 @@ const ProductDetail = () => {
                 />
               ))}
             </div>
-            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{product.rating.toFixed(1)}</span>
-            <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-500">| {product.sell_count} Satış</span>
+            <span className="text-xs sm:text-sm text-[#737373] dark:text-gray-400">{product.sell_count} Reviews</span>
           </div>
 
           <div className="mb-3 sm:mb-4">
-            <span className="text-xl sm:text-2xl font-bold text-blue-600">${product.price}</span>
+            <span className="text-xl sm:text-2xl font-bold text-[#252B42] dark:text-white">${product.price}</span>
           </div>
 
           <div className="mb-4 sm:mb-6">
-            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Stok Durumu: </span>
-            <span className={`text-xs sm:text-sm font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {availability} ({product.stock} adet)
+            <span className="text-xs sm:text-sm text-[#737373] dark:text-gray-400">Availability : </span>
+            <span className={`text-xs sm:text-sm font-medium ${product.stock > 0 ? 'text-[#23A6F0]' : 'text-red-600'}`}>
+              {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
             </span>
           </div>
 
-          <p className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
+          <p className="text-[#737373] dark:text-gray-400 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
             {product.description}
           </p>
 
-          <div className="flex flex-col gap-3">
+          {/* Color Options */}
+          <div className="flex items-center gap-2 mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <button className="w-6 h-6 rounded-full bg-[#23A6F0]"></button>
+            <button className="w-6 h-6 rounded-full bg-[#23856D]"></button>
+            <button className="w-6 h-6 rounded-full bg-[#E77C40]"></button>
+            <button className="w-6 h-6 rounded-full bg-[#252B42]"></button>
+          </div>
+
+          <div className="flex items-center gap-3">
             <button 
               onClick={handleAddToCart}
-              className="bg-blue-500 text-white py-2.5 sm:py-3 px-6 rounded font-medium hover:bg-blue-600 transition-colors text-sm sm:text-base"
+              className="bg-[#23A6F0] text-white py-2.5 sm:py-3 px-5 rounded-md font-medium hover:bg-[#1a8cd8] transition-colors text-sm"
             >
-              Sepete Ekle
+              Select Options
             </button>
             
             <div className="flex gap-2">
               <button 
                 onClick={handleToggleFavorite}
-                className={`flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                className={`flex items-center justify-center w-10 h-10 border rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
                   isFavorite ? 'border-red-500 bg-red-50 dark:bg-red-900/30' : 'border-gray-300 dark:border-gray-600'
                 }`}
               >
-                <Heart size={18} className={`sm:w-5 sm:h-5 ${isFavorite ? 'text-red-500 fill-red-500' : 'dark:text-gray-400'}`} />
+                <Heart size={18} className={isFavorite ? 'text-red-500 fill-red-500' : 'text-[#252B42] dark:text-gray-400'} />
               </button>
-              <button className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
-                <ShoppingCart size={18} className="sm:w-5 sm:h-5 dark:text-gray-400" />
+              <button className="flex items-center justify-center w-10 h-10 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700">
+                <ShoppingCart size={18} className="text-[#252B42] dark:text-gray-400" />
               </button>
-              <button className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
-                <Eye size={18} className="sm:w-5 sm:h-5 dark:text-gray-400" />
+              <button className="flex items-center justify-center w-10 h-10 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700">
+                <Eye size={18} className="text-[#252B42] dark:text-gray-400" />
               </button>
             </div>
           </div>
@@ -230,9 +238,9 @@ const ProductDetail = () => {
             </div>
 
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{product.name}</h1>
+              <h1 className="text-2xl font-bold text-[#252B42] dark:text-white mb-4">{product.name}</h1>
               
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2 mb-4">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -242,46 +250,55 @@ const ProductDetail = () => {
                     />
                   ))}
                 </div>
-                <span className="text-gray-600 dark:text-gray-400">{product.rating.toFixed(1)}</span>
-                <span className="text-gray-400 dark:text-gray-500">| {product.sell_count} Satış</span>
+                <span className="text-[#737373] dark:text-gray-400 text-sm">{product.sell_count} Reviews</span>
+              </div>
+
+              <div className="mb-4">
+                <span className="text-2xl font-bold text-[#252B42] dark:text-white">${product.price}</span>
               </div>
 
               <div className="mb-6">
-                <span className="text-3xl font-bold text-blue-600">${product.price}</span>
-              </div>
-
-              <div className="mb-8">
-                <span className="text-gray-600 dark:text-gray-400">Stok Durumu: </span>
-                <span className={`font-medium ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {availability} ({product.stock} adet)
+                <span className="text-[#737373] dark:text-gray-400 text-sm">Availability : </span>
+                <span className={`text-sm font-bold ${product.stock > 0 ? 'text-[#23A6F0]' : 'text-red-600'}`}>
+                  {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
                 </span>
               </div>
 
-              <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed text-lg">
+              <p className="text-[#737373] dark:text-gray-400 mb-6 leading-relaxed text-sm">
                 {product.description}
               </p>
 
-              <div className="flex items-center gap-4">
+              <hr className="border-gray-200 dark:border-gray-700 mb-6" />
+
+              {/* Color Options */}
+              <div className="flex items-center gap-2 mb-8">
+                <button className="w-8 h-8 rounded-full bg-[#23A6F0]"></button>
+                <button className="w-8 h-8 rounded-full bg-[#23856D]"></button>
+                <button className="w-8 h-8 rounded-full bg-[#E77C40]"></button>
+                <button className="w-8 h-8 rounded-full bg-[#252B42]"></button>
+              </div>
+
+              <div className="flex items-center gap-3">
                 <button 
                   onClick={handleAddToCart}
-                  className="bg-blue-500 text-white py-3 px-8 rounded font-medium hover:bg-blue-600 transition-colors"
+                  className="bg-[#23A6F0] text-white py-3 px-5 rounded-md font-bold text-sm hover:bg-[#1a8cd8] transition-colors"
                 >
-                  Sepete Ekle
+                  Select Options
                 </button>
                 
                 <button 
                   onClick={handleToggleFavorite}
-                  className={`flex items-center justify-center w-12 h-12 border rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                  className={`flex items-center justify-center w-10 h-10 border rounded-full hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
                     isFavorite ? 'border-red-500 bg-red-50 dark:bg-red-900/30' : 'border-gray-300 dark:border-gray-600'
                   }`}
                 >
-                  <Heart size={24} className={isFavorite ? 'text-red-500 fill-red-500' : 'dark:text-gray-400'} />
+                  <Heart size={20} className={isFavorite ? 'text-red-500 fill-red-500' : 'text-[#252B42] dark:text-gray-400'} />
                 </button>
-                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
-                  <ShoppingCart size={24} className="dark:text-gray-400" />
+                <button className="flex items-center justify-center w-10 h-10 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <ShoppingCart size={20} className="text-[#252B42] dark:text-gray-400" />
                 </button>
-                <button className="flex items-center justify-center w-12 h-12 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
-                  <Eye size={24} className="dark:text-gray-400" />
+                <button className="flex items-center justify-center w-10 h-10 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <Eye size={20} className="text-[#252B42] dark:text-gray-400" />
                 </button>
               </div>
             </div>
@@ -290,40 +307,231 @@ const ProductDetail = () => {
       </div>
 
       <div className="border-t border-gray-200 dark:border-gray-700 mt-6 sm:mt-8">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            <div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Ürün Açıklaması</h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-sm sm:text-base">
-                {product.description}
-              </p>
-            </div>
+        {/* Tabs Navigation */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4">
+          <div className="flex justify-center gap-4 sm:gap-8 py-4 border-b border-gray-200 dark:border-gray-700">
+            <button
+              onClick={() => setActiveTab('description')}
+              className={`text-sm sm:text-base font-semibold pb-2 transition-colors ${
+                activeTab === 'description' 
+                  ? 'text-[#252B42] dark:text-white border-b-2 border-[#23A6F0]' 
+                  : 'text-[#737373] dark:text-gray-400 hover:text-[#252B42] dark:hover:text-white'
+              }`}
+            >
+              Description
+            </button>
+            <button
+              onClick={() => setActiveTab('additional')}
+              className={`text-sm sm:text-base font-semibold pb-2 transition-colors ${
+                activeTab === 'additional' 
+                  ? 'text-[#252B42] dark:text-white border-b-2 border-[#23A6F0]' 
+                  : 'text-[#737373] dark:text-gray-400 hover:text-[#252B42] dark:hover:text-white'
+              }`}
+            >
+              Additional Information
+            </button>
+            <button
+              onClick={() => setActiveTab('reviews')}
+              className={`text-sm sm:text-base font-semibold pb-2 transition-colors flex items-center gap-1 ${
+                activeTab === 'reviews' 
+                  ? 'text-[#252B42] dark:text-white border-b-2 border-[#23A6F0]' 
+                  : 'text-[#737373] dark:text-gray-400 hover:text-[#252B42] dark:hover:text-white'
+              }`}
+            >
+              Reviews <span className="text-[#23856D]">({product.sell_count})</span>
+            </button>
+          </div>
+        </div>
 
-            <div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">Ürün Bilgileri</h3>
-              <div className="space-y-2 sm:space-y-3">
-                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400">Ürün ID:</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{product.id}</span>
+        {/* Tab Content */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-8 sm:py-12">
+          {activeTab === 'description' && (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              {/* Left Image */}
+              <div className="lg:col-span-4">
+                <div className="rounded-lg overflow-hidden">
+                  <img 
+                    src="/images/categories/fixed-height (1).png" 
+                    alt="Product showcase"
+                    className="w-full h-auto object-cover"
+                  />
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400">Fiyat:</span>
-                  <span className="font-medium text-blue-600">${product.price}</span>
+              </div>
+
+              {/* Middle Content */}
+              <div className="lg:col-span-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#252B42] dark:text-white mb-4 sm:mb-6">
+                  the quick fox jumps over
+                </h3>
+                <p className="text-[#737373] dark:text-gray-400 text-sm leading-relaxed mb-4">
+                  Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT://official://teletext 
+                  consequent sunt nostrud amet.
+                </p>
+                <p className="text-[#737373] dark:text-gray-400 text-sm leading-relaxed mb-4">
+                  Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT://official://teletext 
+                  consequent sunt nostrud amet.
+                </p>
+                <p className="text-[#737373] dark:text-gray-400 text-sm leading-relaxed">
+                  Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT://official://teletext 
+                  consequent sunt nostrud amet.
+                </p>
+              </div>
+
+              {/* Right Content */}
+              <div className="lg:col-span-4">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#252B42] dark:text-white mb-4 sm:mb-6">
+                  the quick fox jumps over
+                </h3>
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                </ul>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-[#252B42] dark:text-white mb-4 sm:mb-6">
+                  the quick fox jumps over
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                  <li className="flex items-center gap-3 text-[#737373] dark:text-gray-400 text-sm">
+                    <ChevronDown className="w-4 h-4 text-[#737373] rotate-[-90deg]" />
+                    the quick fox jumps over the lazy dog
+                  </li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'additional' && (
+            <div className="max-w-3xl mx-auto">
+              <h3 className="text-xl font-bold text-[#252B42] dark:text-white mb-6">Additional Information</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between py-3 border-b border-gray-200 dark:border-gray-700">
+                  <span className="text-[#737373] dark:text-gray-400">Weight</span>
+                  <span className="text-[#252B42] dark:text-white font-medium">0.5 kg</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400">Stok:</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{product.stock} adet</span>
+                <div className="flex justify-between py-3 border-b border-gray-200 dark:border-gray-700">
+                  <span className="text-[#737373] dark:text-gray-400">Dimensions</span>
+                  <span className="text-[#252B42] dark:text-white font-medium">15 × 10 × 5 cm</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400">Puan:</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{product.rating.toFixed(1)} / 5</span>
+                <div className="flex justify-between py-3 border-b border-gray-200 dark:border-gray-700">
+                  <span className="text-[#737373] dark:text-gray-400">Materials</span>
+                  <span className="text-[#252B42] dark:text-white font-medium">Premium Quality</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400">Satış Sayısı:</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{product.sell_count}</span>
+                <div className="flex justify-between py-3 border-b border-gray-200 dark:border-gray-700">
+                  <span className="text-[#737373] dark:text-gray-400">Stock</span>
+                  <span className="text-[#252B42] dark:text-white font-medium">{product.stock} units</span>
                 </div>
               </div>
             </div>
+          )}
+
+          {activeTab === 'reviews' && (
+            <div className="max-w-3xl mx-auto">
+              <h3 className="text-xl font-bold text-[#252B42] dark:text-white mb-6">Customer Reviews</h3>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={24}
+                      className={`${i < Math.floor(product.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                    />
+                  ))}
+                </div>
+                <span className="text-[#252B42] dark:text-white font-medium">{product.rating.toFixed(1)} out of 5</span>
+              </div>
+              <p className="text-[#737373] dark:text-gray-400">Based on {product.sell_count} reviews</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Bestseller Products */}
+      <div className="bg-[#FAFAFA] dark:bg-gray-800 py-12">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#252B42] dark:text-white mb-8 text-center lg:text-left">
+            BESTSELLER PRODUCTS
+          </h2>
+          <div className="border-b border-gray-200 dark:border-gray-700 mb-8"></div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {productList?.slice(0, 8).map((item) => (
+              <Link 
+                key={item.id} 
+                to={`/product/${item.id}`}
+                className="bg-white dark:bg-gray-900 group"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img 
+                    src={item.images?.[0]?.url || '/images/placeholder.jpg'} 
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-4 text-center">
+                  <h3 className="text-base font-bold text-[#252B42] dark:text-white mb-2">{item.name}</h3>
+                  <p className="text-sm text-[#737373] dark:text-gray-400 mb-2">English Department</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="text-[#BDBDBD] line-through">${(item.price * 1.2).toFixed(2)}</span>
+                    <span className="text-[#23856D] font-bold">${item.price}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Brand Logos */}
+      <div className="py-12 bg-[#FAFAFA] dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+            <img 
+              src="/images/shoppage/Vector.png" 
+              alt="Hooli" 
+              className="h-8 sm:h-10 object-contain grayscale hover:grayscale-0 transition-all dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (1).png" 
+              alt="Lyft" 
+              className="h-8 sm:h-10 object-contain grayscale hover:grayscale-0 transition-all dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (2).png" 
+              alt="Stripe" 
+              className="h-8 sm:h-10 object-contain grayscale hover:grayscale-0 transition-all dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (3).png" 
+              alt="AWS" 
+              className="h-8 sm:h-10 object-contain grayscale hover:grayscale-0 transition-all dark:invert"
+            />
+            <img 
+              src="/images/shoppage/Vector (4).png" 
+              alt="Reddit" 
+              className="h-8 sm:h-10 object-contain grayscale hover:grayscale-0 transition-all dark:invert"
+            />
           </div>
         </div>
       </div>

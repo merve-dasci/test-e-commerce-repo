@@ -63,7 +63,7 @@ const About = () => {
             <div className="mt-8 lg:mt-0">
               <div className="relative">
                 <img 
-                  src="/images/hero/technology 1.png"
+                  src="/images/hero/none (1).png"
                   alt="About us"
                   className="w-full h-64 lg:h-96 object-cover rounded-lg"
                 />

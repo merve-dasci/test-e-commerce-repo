@@ -137,6 +137,137 @@ const Contact = () => {
           </div>
         </section>
 
+        {/* Contact Us with Background - Desktop */}
+        <section className="hidden lg:block relative min-h-[500px]">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/categories/background (3).png')" }}
+          ></div>
+          <div className="relative z-10 max-w-7xl mx-auto px-4 py-20">
+            <div className="grid grid-cols-12 gap-8 items-center">
+              {/* Left Content */}
+              <div className="col-span-4">
+                <h2 className="text-4xl font-bold text-white mb-6">CONTACT US</h2>
+                <p className="text-white/80 text-sm leading-relaxed mb-8">
+                  Problems trying to resolve the conflict between<br />
+                  the two major realms of Classical physics:<br />
+                  Newtonian mechanics
+                </p>
+                <button className="bg-[#23A6F0] text-white px-8 py-4 rounded text-sm font-bold hover:bg-[#1a8cd8] transition-colors">
+                  CONTACT US
+                </button>
+              </div>
+
+              {/* Right - Office Locations */}
+              <div className="col-span-4">
+                <div className="grid grid-cols-1 gap-8">
+                  {/* Paris */}
+                  <div className="text-white">
+                    <h3 className="text-xl font-bold mb-2">Paris</h3>
+                    <p className="text-white/80 text-sm">1901 Thorn ridge Cir.</p>
+                    <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                    <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                    <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+                  </div>
+
+                  {/* Berlin */}
+                  <div className="text-white">
+                    <h3 className="text-xl font-bold mb-2">Berlin</h3>
+                    <p className="text-white/80 text-sm">4140 Parker Rd.</p>
+                    <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                    <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                    <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right - More Office Locations */}
+              <div className="col-span-4">
+                <div className="grid grid-cols-1 gap-8">
+                  {/* New York */}
+                  <div className="text-white">
+                    <h3 className="text-xl font-bold mb-2">New York</h3>
+                    <p className="text-white/80 text-sm">2715 Ash Dr. San Jose,</p>
+                    <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                    <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                    <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+                  </div>
+
+                  {/* London */}
+                  <div className="text-white">
+                    <h3 className="text-xl font-bold mb-2">London</h3>
+                    <p className="text-white/80 text-sm">3517 W. Gray St. Utica,</p>
+                    <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                    <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                    <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Us with Background - Mobile */}
+        <section className="lg:hidden relative">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/categories/background (2).png')" }}
+          ></div>
+          <div className="relative z-10 px-4 py-12">
+            {/* Top Content */}
+            <div className="text-center mb-10">
+              <h2 className="text-2xl font-bold text-white mb-4">CONTACT US</h2>
+              <p className="text-white/80 text-sm leading-relaxed mb-6">
+                Problems trying to resolve the conflict between<br />
+                the two major realms of Classical physics:<br />
+                Newtonian mechanics
+              </p>
+              <button className="bg-[#23A6F0] text-white px-8 py-3 rounded text-sm font-bold hover:bg-[#1a8cd8] transition-colors">
+                CONTACT US
+              </button>
+            </div>
+
+            {/* Office Locations */}
+            <div className="space-y-8">
+              {/* Paris */}
+              <div className="text-center text-white border-b border-white/20 pb-6">
+                <h3 className="text-lg font-bold mb-2">Paris</h3>
+                <p className="text-white/80 text-sm">1901 Thorn ridge Cir.</p>
+                <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+              </div>
+
+              {/* Berlin */}
+              <div className="text-center text-white border-b border-white/20 pb-6">
+                <h3 className="text-lg font-bold mb-2">Berlin</h3>
+                <p className="text-white/80 text-sm">4140 Parker Rd.</p>
+                <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+              </div>
+
+              {/* New York */}
+              <div className="text-center text-white border-b border-white/20 pb-6">
+                <h3 className="text-lg font-bold mb-2">New York</h3>
+                <p className="text-white/80 text-sm">2715 Ash Dr. San Jose,</p>
+                <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+              </div>
+
+              {/* London */}
+              <div className="text-center text-white pb-6">
+                <h3 className="text-lg font-bold mb-2">London</h3>
+                <p className="text-white/80 text-sm">3517 W. Gray St. Utica,</p>
+                <p className="text-white/80 text-sm mb-2">75000 Paris</p>
+                <p className="text-white/80 text-sm">Phone : +451 215 215</p>
+                <p className="text-white/80 text-sm">Fax : +451 215 215</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Office Visits Section */}
         <section className="py-16 lg:py-20 bg-white dark:bg-gray-900">
           <div className="max-w-7xl mx-auto px-4 text-center">
