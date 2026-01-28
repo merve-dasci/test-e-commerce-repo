@@ -1,6 +1,9 @@
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
+  
   return (
     <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
      
@@ -22,40 +25,40 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
          
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Company Info</h4>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('footer.companyInfo')}</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">About Us</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('nav.about')}</a></li>
               <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Carrier</a></li>
               <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">We are hiring</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Blog</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('nav.blog')}</a></li>
             </ul>
           </div>
 
        
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Legal</h4>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('footer.legal')}</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Terms of Service</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Legal</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.privacyPolicy')}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.termsOfService')}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.legal')}</a></li>
               <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">User Agreement</a></li>
             </ul>
           </div>
 
         
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Features</h4>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('footer.features')}</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Business Marketing</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">User Analytic</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Live Chat</a></li>
-              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Unlimited Support</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.businessMarketing')}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.userAnalytic')}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.liveChat')}</a></li>
+              <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">{t('footer.unlimitedSupport')}</a></li>
             </ul>
           </div>
 
         
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Resources</h4>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('footer.resources')}</h4>
             <ul className="space-y-2">
               <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">iOS & Android</a></li>
               <li><a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Watch a Demo</a></li>
@@ -66,18 +69,18 @@ const Footer = () => {
 
        
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Get In Touch</h4>
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('footer.subscribe')}</h4>
             <div className="flex mb-3">
               <input
                 type="email"
-                placeholder="Your Email"
+                placeholder={t('footer.emailPlaceholder')}
                 className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               <button className="bg-white dark:bg-gray-700 border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-r-md transition-colors duration-200 font-medium">
-                Subscribe
+                {t('footer.subscribe')}
               </button>
             </div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Lorem imp sum dolor Amit</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">{t('footer.subscribeText')}</p>
           </div>
         </div>
 
@@ -85,7 +88,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900 px-8 py-6 rounded-lg">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 md:mb-0 font-bold">
-              Made With Love By Finland All Right Reserved
+              {t('footer.copyright')}
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { logoutUser } from '../store/actions';
 import { removeFromCart, updateCartItem } from '../store/actions/shoppingCartActions';
 import Gravatar from 'react-gravatar';
@@ -8,8 +9,10 @@ import { Search, ShoppingCart, Menu, User, Phone, Mail, Facebook, Instagram, Twi
 import { toast } from 'react-toastify';
 import api from '../api/api';
 import ThemeToggle from '../components/ThemeToggle';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 const Header = () => {
+  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false);
   const [isCartDropdownOpen, setIsCartDropdownOpen] = useState(false);
@@ -138,6 +141,7 @@ const Header = () => {
                 <Facebook className="w-4 h-4 cursor-pointer hover:text-blue-600" />
                 <Twitter className="w-4 h-4 cursor-pointer hover:text-blue-400" />
               </div>
+              <LanguageSwitcher variant="compact" />
               <ThemeToggle />
             </div>
           </div>
@@ -155,7 +159,7 @@ const Header = () => {
 
           
             <nav className="hidden md:flex space-x-8">
-              <Link to="/" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">Home</Link>
+              <Link to="/" className="text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium">{t('nav.home')}</Link>
               
               {/* Shop Dropdown */}
               <div 
@@ -167,7 +171,7 @@ const Header = () => {
                   to="/shop"
                   className="flex items-center text-gray-700 hover:text-blue-600 font-medium"
                 >
-                  Shop
+                  {t('nav.shop')}
                   <ChevronDown className="w-4 h-4 ml-1" />
                 </Link>
                 
@@ -177,9 +181,9 @@ const Header = () => {
                       <div className="flex p-6">
                         {/* Kadın Column */}
                         <div className="flex-1 pr-6 border-r border-gray-200">
-                          <h3 className="font-bold text-gray-800 mb-4">Kadın</h3>
+                          <h3 className="font-bold text-gray-800 mb-4">{t('nav.women')}</h3>
                           {kadinCategories.length === 0 ? (
-                            <p className="text-gray-400 text-sm">Yükleniyor...</p>
+                            <p className="text-gray-400 text-sm">{t('common.loading')}</p>
                           ) : (
                             <ul className="space-y-2">
                               {kadinCategories.map((category) => (
@@ -199,9 +203,9 @@ const Header = () => {
                         
                         {/* Erkek Column */}
                         <div className="flex-1 pl-6">
-                          <h3 className="font-bold text-gray-800 mb-4">Erkek</h3>
+                          <h3 className="font-bold text-gray-800 mb-4">{t('nav.men')}</h3>
                           {erkekCategories.length === 0 ? (
-                            <p className="text-gray-400 text-sm">Yükleniyor...</p>
+                            <p className="text-gray-400 text-sm">{t('common.loading')}</p>
                           ) : (
                             <ul className="space-y-2">
                               {erkekCategories.map((category) => (
@@ -224,12 +228,12 @@ const Header = () => {
                 )}
               </div>
 
-              <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium">About</Link>
-              <Link to="/blog" className="text-gray-700 hover:text-blue-600 font-medium">Blog</Link>
-              <Link to="/contact" className="text-gray-700 hover:text-blue-600 font-medium">Contact</Link>
-              <Link to="/pricing" className="text-gray-700 hover:text-blue-600 font-medium">Pricing</Link>
-              <Link to="/team" className="text-gray-700 hover:text-blue-600 font-medium">Team</Link>
-              <Link to="/pages" className="text-gray-700 hover:text-blue-600 font-medium">Pages</Link>
+              <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium">{t('nav.about')}</Link>
+              <Link to="/blog" className="text-gray-700 hover:text-blue-600 font-medium">{t('nav.blog')}</Link>
+              <Link to="/contact" className="text-gray-700 hover:text-blue-600 font-medium">{t('nav.contact')}</Link>
+              <Link to="/pricing" className="text-gray-700 hover:text-blue-600 font-medium">{t('nav.pricing')}</Link>
+              <Link to="/team" className="text-gray-700 hover:text-blue-600 font-medium">{t('nav.team')}</Link>
+              <Link to="/pages" className="text-gray-700 hover:text-blue-600 font-medium">{t('nav.pages')}</Link>
             </nav>
 
          

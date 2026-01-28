@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+// Environment variables for API configuration
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://workintech-fe-ecommerce.onrender.com';
+const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT) || 10000;
 
 const api = axios.create({
-  baseURL: 'https://workintech-fe-ecommerce.onrender.com',
-  timeout: 10000,
+  baseURL: API_BASE_URL,
+  timeout: API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
   },

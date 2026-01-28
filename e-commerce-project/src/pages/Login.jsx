@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { loginUser } from '../store/actions';
 import { setAuthHeader } from '../utils/auth';
 import { toast } from 'react-toastify';
 
 const Login = () => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
   const location = useLocation();
@@ -20,11 +22,11 @@ const Login = () => {
     const { email, password } = data;
     let hasError = false;
     if (!email) {
-      toast.error('Email is required');
+      toast.error(t('validation.required'));
       hasError = true;
     }
     if (!password) {
-      toast.error('Password is required');
+      toast.error(t('validation.required'));
       hasError = true;
     }
     if (hasError) return;
@@ -35,12 +37,12 @@ const Login = () => {
         if (token) {
           setAuthHeader(token);
         }
-        toast.success('Giriş başarılı! Hoş geldiniz.');
+        toast.success(t('auth.loginSuccess'));
         const redirectTo = location.state?.from?.pathname || '/';
         history.push(redirectTo);
       })
       .catch((error) => {
-        toast.error(error.message || 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.');
+        toast.error(error.message || t('auth.invalidCredentials'));
       });
   };
 
@@ -48,9 +50,9 @@ const Login = () => {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 sm:py-12 px-4">
       <nav className="py-3 sm:py-4 px-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-1440 mx-auto text-sm sm:text-base">
-          <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">Home</Link>
+          <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">{t('nav.home')}</Link>
           <span className="mx-2 text-gray-400 dark:text-gray-500">/</span>
-          <span className="text-gray-900 dark:text-white">Login</span>
+          <span className="text-gray-900 dark:text-white">{t('nav.login')}</span>
         </div>
       </nav>
 
@@ -60,9 +62,9 @@ const Login = () => {
         
           <div className="text-center mb-6 sm:mb-8">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Welcome Back
+              {t('auth.welcomeBack')}
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">Sign in to your account</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">{t('auth.signInAccount')}</p>
           </div>
 
           
@@ -77,19 +79,19 @@ const Login = () => {
            
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
-                Email Address *
+                {t('auth.email')} *
               </label>
               <input
                 type="email"
                 {...register('email', { 
-                  required: 'Email is required',
+                  required: t('validation.required'),
                   pattern: { 
                     value: /^\S+@\S+$/i, 
-                    message: 'Please enter a valid email' 
+                    message: t('validation.invalidEmail')
                   }
                 })}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm sm:text-base"
-                placeholder="Enter your email"
+                placeholder={t('auth.email')}
               />
               {errors.email && <p className="text-red-600 dark:text-red-400 text-xs sm:text-sm mt-1">{errors.email.message}</p>}
             </div>
@@ -97,16 +99,16 @@ const Login = () => {
            
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5 sm:mb-2">
-                Password *
+                {t('auth.password')} *
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   {...register('password', { 
-                    required: 'Password is required'
+                    required: t('validation.required')
                   })}
                   className="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm sm:text-base"
-                  placeholder="Enter your password"
+                  placeholder={t('auth.password')}
                 />
                 <button
                   type="button"
@@ -127,7 +129,7 @@ const Login = () => {
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
               />
               <label className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                Remember me
+                {t('auth.rememberMe')}
               </label>
             </div>
 
@@ -141,15 +143,15 @@ const Login = () => {
                   : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500'
               }`}
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? t('common.loading') : t('nav.login')}
             </button>
           </form>
 
           <div className="mt-4 sm:mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
+              {t('auth.noAccount')}{' '}
               <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-                Sign up
+                {t('nav.signup')}
               </Link>
             </p>
           </div>
