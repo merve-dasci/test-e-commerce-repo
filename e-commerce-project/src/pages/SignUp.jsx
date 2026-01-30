@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchRoles } from '../store/actions';
-import axios from 'axios';
+import api from '../api/api';
 import { toast } from 'react-toastify';
 
 const SignUp = () => {
@@ -57,7 +57,7 @@ const SignUp = () => {
       };
     }
 
-    axios.post('https://workintech-fe-ecommerce.onrender.com/signup', formData)
+    api.post('/signup', formData)
       .then(() => {
         toast.success('Kayıt başarılı! Lütfen e-postanızı kontrol edin.');
         history.push('/');

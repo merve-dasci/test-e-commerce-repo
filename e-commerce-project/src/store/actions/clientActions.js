@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../../api/api';
 import { 
   SET_USER, 
   SET_ROLES, 
@@ -70,7 +70,7 @@ export const verifyTokenFailure = (error) => ({
 
 export const fetchRoles = () => {
   return (dispatch) => {
-    return axios.get('https://workintech-fe-ecommerce.onrender.com/roles')
+    return api.get('/roles')
       .then(response => {
         dispatch(setRoles(response.data));
         return response.data;
@@ -86,7 +86,7 @@ export const loginUser = (credentials) => {
   return (dispatch) => {
     dispatch(loginStart());
     
-    return axios.post('https://workintech-fe-ecommerce.onrender.com/login', credentials)
+    return api.post('/login', credentials)
       .then(response => {
         const { token, name, email, role_id } = response.data;
         
@@ -132,7 +132,7 @@ export const verifyToken = (token) => {
     
     setAuthHeader(token);
     
-    return axios.get('https://workintech-fe-ecommerce.onrender.com/verify')
+    return api.get('/verify')
       .then(response => {
         const { token: newToken, name, email, role_id } = response.data;
         
