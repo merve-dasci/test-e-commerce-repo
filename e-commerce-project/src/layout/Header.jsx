@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import api from '../api/api';
 import ThemeToggle from '../components/ThemeToggle';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import useDebounce from '../hooks/useDebounce';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -25,6 +26,8 @@ const Header = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   
+  // useDebounce hook - arama inputu için 300ms gecikme
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
  
   const { user, isLoggedIn } = useSelector(state => state.client);
   const categories = useSelector(state => state.product.categories);
@@ -59,24 +62,32 @@ const Header = () => {
     toast.success('Çıkış yapıldı. Güle güle!');
   };
 
-  // Arama fonksiyonu
-  const handleSearch = async (query) => {
+  // Debounced arama - her tuşa basıldığında değil, 300ms bekledikten sonra API çağrısı yapar
+  useEffect(() => {
+    const searchProducts = async () => {
+      if (debouncedSearchQuery.length < 2) {
+        setSearchResults([]);
+        return;
+      }
+      
+      setIsSearching(true);
+      try {
+        const response = await api.get(`/products?filter=${debouncedSearchQuery}&limit=5`);
+        setSearchResults(response.data.products || []);
+      } catch (error) {
+        console.error('Search error:', error);
+        setSearchResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    searchProducts();
+  }, [debouncedSearchQuery]);
+
+  // Arama input handler - sadece state günceller, API çağrısı useEffect'te yapılır
+  const handleSearch = (query) => {
     setSearchQuery(query);
-    if (query.length < 2) {
-      setSearchResults([]);
-      return;
-    }
-    
-    setIsSearching(true);
-    try {
-      const response = await api.get(`/products?filter=${query}&limit=5`);
-      setSearchResults(response.data.products || []);
-    } catch (error) {
-      console.error('Search error:', error);
-      setSearchResults([]);
-    } finally {
-      setIsSearching(false);
-    }
   };
 
   // Arama sonucuna tıklama

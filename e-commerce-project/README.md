@@ -50,6 +50,14 @@ Modern ve tam özellikli bir e-ticaret web uygulaması. React, Redux ve Tailwind
 - ✅ Lazy loading (Code splitting)
 - ✅ Optimized images
 - ✅ API caching
+- ✅ **Debounced search** (gereksiz API çağrılarını önler)
+
+### 🪝 Custom Hooks
+- ✅ `useLocalStorage` - localStorage ile senkronize state
+- ✅ `useDebounce` - Input değişimlerini geciktirir (arama optimizasyonu)
+- ✅ `useWindowSize` - Responsive tasarım kontrolü
+- ✅ `useOnClickOutside` - Dropdown menü yönetimi
+- ✅ `useTheme` - Dark/Light mode yönetimi
 
 ### 🔐 Environment Variables
 - ✅ `.env` ile güvenli konfigürasyon
@@ -97,6 +105,13 @@ src/
 │   ├── Skeleton.jsx
 │   └── ThemeToggle.jsx
 ├── context/          # React Context (Theme)
+├── hooks/            # Custom React Hooks
+│   ├── useDebounce.js
+│   ├── useLocalStorage.js
+│   ├── useOnClickOutside.js
+│   ├── useTheme.js
+│   ├── useWindowSize.js
+│   └── index.js      # Barrel export
 ├── data/             # Static data (cities, etc.)
 ├── layout/           # Layout bileşenleri
 │   ├── Header.jsx
